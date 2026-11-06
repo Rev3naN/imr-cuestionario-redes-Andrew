@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#140e14">
+	<meta name="description" content="Pon a prueba tus conocimientos de redes informáticas con un cuestionario interactivo de 10 preguntas.">
+	<title>Conexión · Cuestionario de redes</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@400;500;600;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			color-scheme: dark;
+			--ink: #f4e9e2;
+			--muted: #c1aeb7;
+			--paper: #100d15;
+			--surface: rgba(27, 20, 31, .96);
+			--line: rgba(203, 174, 145, .24);
+			--green: #c15369;
+			--green-dark: #76263e;
+			--mint: #344138;
+			--lime: #e0c58d;
+			--coral: #df8188;
+			--navy: #17101c;
+			--shadow: 0 24px 70px rgba(0, 0, 0, .42), 0 4px 18px rgba(93, 28, 44, .14);
+			font-family: "Cormorant Garamond", "Palatino Linotype", serif;
+		}
+
+		*, *::before, *::after { box-sizing: border-box; }
+		body {
+			position: relative;
+			isolation: isolate;
+			margin: 0;
+			min-width: 320px;
+			min-height: 100vh;
+			color: var(--ink);
+			background: radial-gradient(ellipse at 50% -12%, rgba(111, 34, 53, .42), transparent 46%), radial-gradient(ellipse at 15% 50%, rgba(55, 27, 42, .32), transparent 45%), linear-gradient(155deg, #211720 0%, #151016 52%, #0c0a0e 100%);
+		}
+		body::before, body::after { position: fixed; z-index: -1; content: ""; pointer-events: none; }
+		body::before {
+			opacity: .8;
+			background: radial-gradient(ellipse 25% 60% at 50% 116%, rgba(115, 34, 52, .22) 0 47%, rgba(207, 165, 112, .23) 48% 48.5%, transparent 49%), radial-gradient(ellipse 38% 82% at 50% 120%, transparent 0 51%, rgba(151, 55, 66, .22) 51.3% 51.7%, transparent 52%), radial-gradient(ellipse 56% 102% at 50% 128%, transparent 0 51%, rgba(207, 165, 112, .24) 51.3% 51.7%, transparent 52%), radial-gradient(ellipse at 50% -10%, rgba(100, 25, 43, .34), transparent 65%);
+			animation: cathedral-glow 14s ease-in-out infinite alternate;
+		}
+		body::after {
+			inset: 0;
+			opacity: .55;
+			background: repeating-linear-gradient(90deg, transparent 0 124px, rgba(196, 158, 125, .055) 125px, transparent 126px), linear-gradient(180deg, transparent 48%, rgba(101, 22, 42, .18) 100%);
+			animation: shadow-drift 20s ease-in-out infinite alternate;
+		}
+		button { font: inherit; }
+		[hidden] { display: none !important; }
+		.page-shell { position: relative; z-index: 1; width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+		.topbar {
+			height: 82px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 1px solid rgba(190, 151, 117, .24);
+		}
+		.brand { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; }
+		.brand-mark {
+			width: 38px; height: 38px; display: grid; place-items: center;
+			border: 1px solid rgba(223, 189, 130, .65); border-radius: 12px; color: #f2d89e;
+			background: linear-gradient(145deg, #552637, #21151d 72%);
+			box-shadow: inset 0 1px 3px rgba(255, 224, 173, .16), 0 5px 16px rgba(0, 0, 0, .4);
+			animation: candle-flare 6s ease-in-out infinite;
+		}
+		.brand-name { font-family: "UnifrakturCook", "Old English Text MT", "Palatino Linotype", serif; font-size: 25px; font-weight: 700; letter-spacing: .3px; text-shadow: 0 0 16px rgba(181, 73, 83, .25); }
+		.brand-name span { color: var(--green); }
+		.top-meta { display: flex; align-items: center; gap: 23px; color: var(--muted); font-size: 12px; font-weight: 700; }
+		.author { padding-left: 22px; border-left: 1px solid var(--line); color: var(--ink); }
+
+		main { padding: 54px 0 62px; }
+		.intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 31px; padding: 18px 0 30px; border-bottom: 1px solid rgba(203, 174, 145, .18); }
+		.eyebrow { display: flex; align-items: center; gap: 9px; margin: 0 0 14px; color: var(--lime); font-family: "Cinzel", "Palatino Linotype", serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+		.eyebrow::before, .eyebrow::after { content: ""; width: 22px; height: 1px; background: var(--lime); box-shadow: 0 0 8px rgba(223, 189, 130, .45); }
+		h1 { margin: 0; font-family: "UnifrakturCook", "Old English Text MT", "Palatino Linotype", serif; font-size: 66px; line-height: .98; letter-spacing: 0; font-weight: 700; text-shadow: 0 3px 18px rgba(0, 0, 0, .48); }
+		h1 span { color: #d3a762; text-shadow: 0 0 22px rgba(177, 61, 81, .38); }
+		.intro-aside { width: min(100%, 360px); padding: 22px; border: 1px solid rgba(203, 174, 145, .22); border-radius: 4px; background: linear-gradient(145deg, rgba(47, 31, 44, .7), rgba(20, 15, 23, .86)); box-shadow: inset 0 1px 0 rgba(248, 219, 189, .08), 0 14px 35px rgba(0, 0, 0, .2); }
+		.intro-copy { margin: 0; color: var(--muted); font-size: 19px; line-height: 1.45; }
+		.intro-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 19px 0; padding: 14px 0; border-top: 1px solid rgba(203, 174, 145, .18); border-bottom: 1px solid rgba(203, 174, 145, .18); }
+		.intro-stat { color: var(--muted); font-size: 13px; line-height: 1.2; }
+		.intro-stat strong { display: block; margin-bottom: 4px; color: var(--lime); font-family: "Cinzel", serif; font-size: 22px; }
+		.begin-button { width: 100%; min-height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 0 17px; border: 1px solid rgba(224, 197, 141, .58); border-radius: 3px; color: #fff0d6; background: linear-gradient(110deg, #76263e, #a23a52 52%, #572035); box-shadow: inset 0 1px 0 rgba(255, 224, 173, .19), 0 6px 20px rgba(78, 20, 39, .3); font-family: "Cinzel", serif; font-size: 13px; font-weight: 700; letter-spacing: .5px; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+		.begin-button:hover { transform: translateY(-2px); filter: brightness(1.14); box-shadow: inset 0 1px 0 rgba(255, 224, 173, .25), 0 10px 24px rgba(100, 25, 48, .38); }
+		.begin-button:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; }
+		.begin-button span { font-size: 20px; transition: transform .2s ease; }
+		.begin-button:hover span { transform: translateX(4px); }
+		.begin-note { margin: 12px 0 0; color: #9c8793; font-size: 12px; text-align: center; }
+
+		.layout { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 20px; align-items: start; }
+		.layout:not([hidden]) { animation: layout-reveal .72s cubic-bezier(.16, 1, .3, 1) both; }
+		.quiz-panel, .side-panel { border: 1px solid rgba(190, 151, 117, .34); border-radius: 6px; background: var(--surface); box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 230, 194, .07); backdrop-filter: blur(18px); }
+		.quiz-panel { position: relative; min-height: 505px; overflow: hidden; }
+		.quiz-panel::before, .side-panel::before { position: absolute; z-index: 2; inset: 8px; border: 1px solid rgba(208, 169, 117, .2); content: ""; pointer-events: none; }
+		.quiz-topline { min-height: 62px; padding: 0 30px; display: flex; align-items: center; justify-content: space-between; gap: 15px; border-bottom: 1px solid var(--line); }
+		.quiz-label { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 12px; font-weight: 700; }
+		.live-dot { width: 8px; height: 8px; border-radius: 50%; background: #d57574; box-shadow: 0 0 0 4px rgba(213, 117, 116, .14), 0 0 12px rgba(213, 117, 116, .55); animation: live-breathe 2.4s ease-in-out infinite; }
+		.question-count { color: var(--ink); font-size: 12px; font-weight: 800; }
+		.progress-track { height: 4px; background: rgba(213, 180, 145, .12); }
+		.progress-fill { width: 10%; height: 100%; background: linear-gradient(90deg, #d7ad72, #a5364f); box-shadow: 0 0 10px rgba(177, 61, 81, .38); transition: width .55s cubic-bezier(.22, 1, .36, 1); }
+		.question-content { padding: 35px 36px 30px; animation: question-reveal .68s cubic-bezier(.16, 1, .3, 1) both; }
+		.question-kicker { margin: 0 0 12px; color: var(--green); font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; }
+		h2 { max-width: 650px; margin: 0; font-family: "Cinzel", "Palatino Linotype", serif; font-size: 25px; line-height: 1.35; letter-spacing: 0; font-weight: 600; }
+		.answer-list { display: grid; gap: 10px; margin: 26px 0 0; padding: 0; list-style: none; }
+		.answer-option {
+			width: 100%; min-height: 54px; padding: 10px 15px; display: flex; align-items: center; gap: 14px;
+			border: 1px solid rgba(190, 151, 117, .24); border-radius: 4px; background: linear-gradient(180deg, rgba(52, 39, 47, .92), rgba(37, 27, 35, .97)); color: var(--ink); text-align: left;
+			box-shadow: inset 0 1px 0 rgba(255, 231, 205, .07), 0 2px 8px rgba(0, 0, 0, .18);
+			cursor: pointer; transition: border-color .2s ease, background .2s ease, transform .2s ease, box-shadow .2s ease;
+		}
+		.answer-option:hover:not(:disabled) { transform: translateY(-2px); border-color: rgba(223, 189, 130, .72); background: linear-gradient(180deg, #47303a, #34232e); box-shadow: inset 0 1px 0 rgba(255, 231, 205, .1), 0 6px 14px rgba(0, 0, 0, .25); }
+		.answer-option:focus-visible, .primary-button:focus-visible, .retry-button:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+		.answer-option:disabled { cursor: default; }
+		.answer-letter { width: 27px; height: 27px; flex: 0 0 27px; display: grid; place-items: center; border: 1px solid rgba(190, 151, 117, .28); border-radius: 4px; color: #d2b992; font-size: 11px; font-weight: 800; }
+		.answer-text { flex: 1; font-size: 16px; font-weight: 600; line-height: 1.35; }
+		.answer-option.is-selected { border-color: #c08d63; background: linear-gradient(180deg, #49313a, #35232e); }
+		.answer-option.is-selected .answer-letter { border-color: var(--green); color: white; background: var(--green-dark); }
+		.answer-option.is-correct { border-color: #7a9c77; background: linear-gradient(180deg, #304035, #243128); }
+		.answer-option.is-correct { animation: answer-correct 1.05s cubic-bezier(.2, .8, .25, 1) both; }
+		.answer-option.is-correct .answer-letter { border-color: #71916e; color: white; background: linear-gradient(145deg, #668c6a, #36543c); }
+		.answer-option.is-wrong { border-color: #ba5964; background: #41232b; }
+		.answer-option.is-wrong { animation: answer-wrong .68s ease both; }
+		.answer-option.is-wrong .answer-letter { border-color: var(--coral); color: white; background: #9e3b4b; }
+		.feedback { min-height: 22px; margin: 14px 0 0; color: var(--muted); font-size: 12px; font-weight: 650; }
+		.feedback.good { color: #b9d1a5; animation: feedback-rise .38s ease both; }
+		.feedback.good::before { content: "✦ "; color: var(--lime); }
+		.feedback.bad { color: #edaaa0; animation: feedback-rise .38s ease both; }
+		.feedback.bad::before { content: "✧ "; color: #df8188; }
+		.question-footer { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 18px 36px 23px; border-top: 1px solid var(--line); }
+		.keyboard-hint { color: var(--muted); font-size: 12px; }
+		.primary-button, .retry-button { min-height: 43px; padding: 0 18px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid rgba(223, 189, 130, .5); border-radius: 3px; color: #f4e3c9; background: linear-gradient(180deg, #8f3548, #5f2034); box-shadow: inset 0 1px 0 rgba(255, 224, 173, .18), 0 4px 12px rgba(0, 0, 0, .3); font-family: "Cinzel", "Palatino Linotype", serif; font-size: 11px; font-weight: 700; cursor: pointer; transition: background .2s ease, transform .2s ease, box-shadow .2s ease; }
+		.primary-button:hover:not(:disabled), .retry-button:hover { transform: translateY(-2px); background: linear-gradient(180deg, #a54455, #75263b); box-shadow: inset 0 1px 0 rgba(255, 224, 173, .22), 0 7px 15px rgba(0, 0, 0, .36); }
+		.primary-button:disabled { color: #9c8983; background: linear-gradient(180deg, #41323a, #30252c); box-shadow: none; cursor: not-allowed; }
+		.side-panel { overflow: hidden; }
+		.side-visual { position: relative; min-height: 160px; padding: 20px; overflow: hidden; color: #f3e7d8; background: radial-gradient(ellipse 54% 92% at 50% 118%, rgba(113, 35, 53, .42) 0 48%, rgba(213, 176, 120, .18) 49% 49.5%, transparent 50%), radial-gradient(ellipse at 50% 0%, rgba(137, 54, 68, .5), transparent 58%), linear-gradient(145deg, #3b202b 0%, #21151e 62%, #140f14 100%); }
+		.side-panel { position: relative; }
+		.side-visual::before { position: absolute; inset: -80% -45%; content: ""; background: linear-gradient(115deg, transparent 43%, rgba(223, 189, 130, .2) 49%, transparent 55%); transform: translateX(-55%); animation: glass-glint 12s ease-in-out infinite; }
+		.side-visual::after { position: absolute; inset: 0; content: ""; opacity: .14; background-image: linear-gradient(rgba(223,189,130,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(223,189,130,.5) 1px, transparent 1px); background-size: 24px 24px; mask-image: linear-gradient(90deg, #000, transparent); }
+		.side-visual-label { position: relative; z-index: 1; color: #e3c28b; font-family: "Cinzel Decorative", "Cinzel", serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-shadow: 0 1px 8px rgba(0, 0, 0, .65); }
+		.network-art { position: relative; z-index: 1; height: 91px; margin-top: 9px; }
+		.network-art svg { width: 100%; height: 100%; overflow: visible; }
+		.network-art line { stroke: rgba(222, 188, 132, .76); stroke-width: 1.5; stroke-dasharray: 4 5; animation: data-flow 2.8s linear infinite; }
+		.network-art path { fill: none; stroke: rgba(180, 190, 136, .78); stroke-width: 3; stroke-linecap: square; stroke-dasharray: 7 5; animation: data-flow 3.2s linear infinite; }
+		.network-art circle { stroke: rgba(237, 211, 171, .92); stroke-width: 2; fill: #8b3549; filter: drop-shadow(0 0 5px rgba(206, 117, 116, .55)); animation: node-pulse 2.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+		.network-art circle:nth-of-type(3) { animation-delay: .35s; }
+		.network-art circle:nth-of-type(4) { animation-delay: .7s; }
+		.network-art circle:nth-of-type(5) { animation-delay: 1.05s; }
+		.network-art circle.center-node { stroke: #f0d7a4; fill: #d2a35f; filter: drop-shadow(0 0 9px rgba(223, 189, 130, .75)); animation: center-glow 2.2s ease-in-out infinite; }
+		.answer-option { animation: answer-arrive .42s both; }
+		.answer-option:nth-child(2) { animation-delay: .05s; }
+		.answer-option:nth-child(3) { animation-delay: .1s; }
+		.answer-option:nth-child(4) { animation-delay: .15s; }
+		.side-info { padding: 22px 21px 20px; }
+		.side-info h3 { margin: 0 0 15px; font-size: 13px; }
+		.stat-row { display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(190, 151, 117, .16); color: var(--muted); font-size: 13px; }
+		.stat-row:last-of-type { border: 0; }
+		.stat-row strong { color: var(--ink); font-size: 11px; }
+		.topic-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 17px; }
+		.topic-tag { padding: 6px 8px; border: 1px solid rgba(190, 151, 117, .3); border-radius: 3px; color: #e1c18c; background: linear-gradient(180deg, #3c2a33, #2b2028); box-shadow: inset 0 1px 0 rgba(255, 231, 205, .08); font-size: 11px; font-weight: 700; }
+		.side-note { margin: 17px 0 0; padding-top: 14px; border-top: 1px solid rgba(190, 151, 117, .16); color: var(--muted); font-size: 12px; line-height: 1.55; }
+		.result-screen { padding: 36px; animation: result-reveal .8s cubic-bezier(.16, 1, .3, 1) both; }
+		.result-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+		.result-heading h2 { font-size: 28px; }
+		.result-heading p { margin: 8px 0 0; color: var(--muted); font-size: 13px; }
+		.score-badge { min-width: 86px; padding: 12px 10px; border: 1px solid rgba(190, 151, 117, .38); border-radius: 4px; color: #efd39c; background: linear-gradient(160deg, #49313b, #2a1c26); box-shadow: inset 0 1px 0 rgba(255, 231, 205, .08), 0 4px 12px rgba(0, 0, 0, .24); text-align: center; }
+		.score-badge strong { display: block; font-size: 22px; }
+		.score-badge span { font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+		.result-summary { margin: 24px 0 20px; padding: 14px 16px; border: 1px solid rgba(190, 151, 117, .2); border-left: 3px solid var(--lime); color: var(--ink); background: linear-gradient(110deg, rgba(87, 43, 55, .45), rgba(38, 29, 36, .72)); font-size: 13px; line-height: 1.5; }
+		.review-list { display: grid; gap: 10px; }
+		.review-item { padding: 14px; border: 1px solid var(--line); border-radius: 4px; background: rgba(15, 11, 15, .24); }
+		.review-item h3 { margin: 0 0 9px; color: #f3e5d7; font-size: 17px; line-height: 1.4; font-weight: 600; }
+		.review-item p { margin: 5px 0 0; color: #d3c2c3; font-size: 15px; line-height: 1.5; }
+		.review-item .correct-answer { color: #c5dda9; font-weight: 700; }
+		.review-item .wrong-answer { color: #f0a3a2; }
+		.result-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 23px; padding-top: 19px; border-top: 1px solid var(--line); }
+		.result-actions p { margin: 0; color: var(--muted); font-size: 11px; }
+		footer { display: flex; justify-content: space-between; gap: 20px; padding: 16px 0 24px; color: var(--muted); font-size: 11px; }
+
+		@keyframes appear { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+		@keyframes answer-arrive { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+		@keyframes cathedral-glow { from { opacity: .48; } to { opacity: .85; } }
+		@keyframes shadow-drift { from { transform: translateX(-.6%); } to { transform: translateX(.6%); } }
+		@keyframes glass-glint { 0%, 15% { transform: translateX(-55%); } 55%, 100% { transform: translateX(55%); } }
+		@keyframes candle-flare { 0%, 100% { opacity: .35; filter: drop-shadow(0 0 4px rgba(195, 86, 73, .2)); } 50% { opacity: .9; filter: drop-shadow(0 0 14px rgba(195, 86, 73, .42)); } }
+		@keyframes question-reveal { from { opacity: 0; transform: translateY(22px) scale(.985); filter: blur(5px); } 65% { opacity: 1; filter: blur(0); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+		@keyframes result-reveal { from { opacity: 0; transform: translateY(28px) scale(.975); filter: blur(7px); } 68% { opacity: 1; filter: blur(0); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+		@keyframes layout-reveal { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+		@keyframes answer-correct { 0% { transform: scale(1); background: #243128; box-shadow: inset 0 1px 0 rgba(255, 231, 205, .07), 0 0 0 rgba(145, 190, 120, 0); } 28% { transform: scale(1.04); background: #496044; box-shadow: inset 0 0 26px rgba(207, 228, 163, .25), 0 0 32px rgba(166, 207, 123, .62); } 52% { transform: scale(1.015); background: #3a503c; box-shadow: inset 0 0 20px rgba(207, 228, 163, .18), 0 0 22px rgba(166, 207, 123, .4); } 100% { transform: scale(1); background: #243128; box-shadow: inset 0 0 12px rgba(160, 194, 125, .08), 0 0 14px rgba(148, 181, 111, .24); } }
+		@keyframes answer-wrong { 0%, 100% { transform: translateX(0); background: #41232b; box-shadow: 0 0 0 rgba(190, 62, 82, 0); } 15%, 55% { transform: translateX(-8px); } 30%, 70% { transform: translateX(8px); background: #792d40; box-shadow: inset 0 0 20px rgba(255, 130, 133, .2), 0 0 28px rgba(210, 65, 92, .48); } 42%, 84% { transform: translateX(-3px); } }
+		@keyframes feedback-rise { from { opacity: 0; transform: translateY(9px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+		@keyframes data-flow { to { stroke-dashoffset: -18; } }
+		@keyframes node-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.22); } }
+		@keyframes center-glow { 0%, 100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.18); opacity: 1; } }
+		@keyframes live-breathe { 0%, 100% { box-shadow: 0 0 0 4px rgba(213, 117, 116, .14), 0 0 8px rgba(213, 117, 116, .4); } 50% { box-shadow: 0 0 0 7px rgba(213, 117, 116, .08), 0 0 15px rgba(213, 117, 116, .65); } }
+		@media (max-width: 800px) {
+			.layout { grid-template-columns: minmax(0, 1fr) 230px; gap: 14px; }
+			.intro { align-items: center; gap: 20px; }
+			.intro-aside { width: min(48%, 360px); padding: 17px; }
+			h1 { font-size: 54px; }
+			.side-info { padding-inline: 16px; }
+			.question-content { padding-inline: 26px; }
+			.question-footer { padding-inline: 26px; }
+		}
+		@media (max-width: 650px) {
+			.page-shell { width: min(100% - 32px, 520px); }
+			.topbar { height: 68px; }
+			.top-meta { gap: 12px; font-size: 10px; }
+			.author { padding-left: 12px; }
+			main { padding: 38px 0 42px; }
+			.intro { display: block; margin-bottom: 23px; }
+			h1 { font-size: clamp(43px, 11vw, 58px); }
+			.intro { gap: 20px; padding-top: 5px; }
+			.intro-aside { width: 100%; margin-top: 22px; padding: 18px; }
+			.intro-copy { font-size: 18px; }
+			.layout { grid-template-columns: 1fr; }
+			.quiz-panel { min-height: 0; }
+			.quiz-topline { min-height: 55px; padding-inline: 19px; }
+			.question-content { padding: 26px 20px 20px; }
+			h2 { font-size: 22px; }
+			.answer-list { margin-top: 21px; }
+			.answer-option { min-height: 51px; }
+			.question-footer { padding: 15px 20px 19px; }
+			.keyboard-hint { display: none; }
+			.side-panel { display: grid; grid-template-columns: 1fr 1.1fr; }
+			.side-visual { min-height: 100%; }
+			.side-info { padding: 17px 15px; }
+			.side-info h3 { margin-bottom: 8px; }
+			.stat-row { padding: 7px 0; }
+			.topic-tags { margin-top: 10px; }
+			.side-note { margin-top: 10px; padding-top: 9px; }
+			.result-screen { padding: 25px 20px; }
+			.result-heading h2 { font-size: 24px; }
+			footer { font-size: 9px; }
+		}
+		@media (max-width: 390px) {
+			.brand-name { font-size: 13px; }
+			.top-meta > span:first-child { display: none; }
+			.side-panel { grid-template-columns: 1fr; }
+			.side-visual { min-height: 140px; }
+			.network-art { height: 75px; }
+			.result-heading { flex-direction: column-reverse; }
+			.score-badge { display: flex; align-items: baseline; gap: 6px; padding: 8px 11px; }
+			.score-badge strong { font-size: 18px; }
+			.result-actions { align-items: flex-start; flex-direction: column; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+		}
+	</style>
+</head>
+<body>
+	<div class="page-shell">
+		<header class="topbar">
+			<a class="brand" href="#inicio" aria-label="Conexión, inicio">
+				<span class="brand-mark" aria-hidden="true">
+					<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2" stroke="currentColor" stroke-width="1.7"/><circle cx="5" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/><circle cx="19" cy="18" r="2" stroke="currentColor" stroke-width="1.7"/><path d="m10.9 6.7-4.8 9.5m6.8-9.5 4.8 9.5M7 18h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+				</span>
+				<span class="brand-name">CONEX<span>IÓN</span></span>
+			</a>
+				<div class="top-meta"><span>CUADERNO DE REDES · 01</span><span class="author">Autor: Andrew</span></div>
+		</header>
+
+		<main id="inicio">
+			<section class="intro" id="intro" aria-labelledby="page-title">
+				<div>
+					<p class="eyebrow">Laboratorio de conocimientos</p>
+					<h1 id="page-title">Conecta las<br><span>ideas.</span></h1>
+				</div>
+				<div class="intro-aside">
+					<p class="intro-copy">Atraviesa los fundamentos de las redes y descubre cuánto sabes sobre el arte de conectar.</p>
+					<div class="intro-stats" aria-label="Detalles del test">
+						<div class="intro-stat"><strong>10</strong>preguntas</div>
+						<div class="intro-stat"><strong>30</strong>en el archivo</div>
+						<div class="intro-stat"><strong>4</strong>opciones</div>
+					</div>
+					<button class="begin-button" id="start-button" type="button">Comenzar el test <span aria-hidden="true">→</span></button>
+					<p class="begin-note">Una selección aleatoria te espera.</p>
+				</div>
+			</section>
+
+			<div class="layout" id="quiz-layout" hidden>
+				<section class="quiz-panel" aria-label="Cuestionario de redes">
+					<div class="quiz-topline">
+						<div class="quiz-label"><span class="live-dot" aria-hidden="true"></span><span id="quiz-status">Listo para comenzar</span></div>
+						<span class="question-count" id="question-count">-- / 10</span>
+					</div>
+					<div class="progress-track" aria-label="Progreso del cuestionario"><div class="progress-fill" id="progress-fill"></div></div>
+					<div id="quiz-content" aria-live="polite"></div>
+				</section>
+
+				<aside class="side-panel" aria-label="Información del cuestionario">
+					<div class="side-visual">
+						<div class="side-visual-label">Topología activa</div>
+						<div class="network-art" aria-hidden="true">
+							<svg viewBox="0 0 230 96" fill="none">
+								<line x1="115" y1="47" x2="42" y2="18"/><line x1="115" y1="47" x2="188" y2="18"/><line x1="115" y1="47" x2="42" y2="77"/><line x1="115" y1="47" x2="188" y2="77"/>
+								<circle cx="115" cy="47" r="10" class="center-node"/><circle cx="42" cy="18" r="6"/><circle cx="188" cy="18" r="6"/><circle cx="42" cy="77" r="6"/><circle cx="188" cy="77" r="6"/>
+							</svg>
+						</div>
+					</div>
+					<div class="side-info">
+						<h3>Tu sesión</h3>
+						<div class="stat-row"><span>Preguntas</span><strong>10 aleatorias</strong></div>
+						<div class="stat-row"><span>Banco total</span><strong>30 preguntas</strong></div>
+						<div class="stat-row"><span>Formato</span><strong>Opción múltiple</strong></div>
+						<div class="topic-tags" aria-label="Temas"><span class="topic-tag">UTP</span><span class="topic-tag">RJ45</span><span class="topic-tag">Fibra</span><span class="topic-tag">Normas</span></div>
+						<p class="side-note">Cada intento elige una combinación nueva del banco de preguntas.</p>
+					</div>
+				</aside>
+			</div>
+		</main>
+		<footer><span>CONEXIÓN · FUNDAMENTOS DE REDES</span><span>Aprender. Conectar. Repetir.</span></footer>
+	</div>
+
+	<script>
+		const questionBank = [
+			{ question: "¿Qué describe mejor una red informática?", options: ["Un conjunto de dispositivos conectados que comparten datos o recursos", "Un programa para diseñar páginas web", "Un dispositivo que convierte corriente alterna", "Un sistema operativo para servidores"], answer: 0 },
+			{ question: "¿Qué significan las siglas LAN?", options: ["Large Access Network", "Local Area Network", "Linked Analog Node", "Longitudinal Array Network"], answer: 1 },
+			{ question: "¿Qué identifica normalmente una dirección IP?", options: ["El fabricante del cable", "La velocidad de una tarjeta de red", "Una interfaz o dispositivo dentro de una red IP", "El tipo de conector de fibra"], answer: 2 },
+			{ question: "¿Para qué se utiliza principalmente un switch?", options: ["Para interconectar dispositivos de una LAN y reenviar tramas", "Para medir la potencia óptica", "Para asignar nombres de dominio", "Para convertir señales digitales en analógicas"], answer: 0 },
+			{ question: "¿Qué función cumple un router?", options: ["Ordena los pares de un cable UTP", "Conecta redes diferentes y enruta paquetes entre ellas", "Amplifica exclusivamente señales de fibra", "Sustituye a todos los puntos de acceso"], answer: 1 },
+			{ question: "¿Qué significa UTP?", options: ["Universal Transfer Protocol", "Unshielded Twisted Pair", "Unified Twisted Port", "Unidirectional Terminal Pair"], answer: 1 },
+			{ question: "¿Por qué se trenzan los pares en un cable UTP?", options: ["Para reducir interferencias electromagnéticas y diafonía", "Para que el cable conduzca electricidad de red", "Para aumentar el número de conectores", "Para distinguir los cables de fibra"], answer: 0 },
+			{ question: "¿Cuántos pares de hilos contiene un cable Ethernet UTP habitual?", options: ["Dos pares", "Tres pares", "Cuatro pares", "Ocho pares"], answer: 2 },
+			{ question: "¿Cuántos contactos tiene el conector modular usado habitualmente en Ethernet sobre par trenzado?", options: ["4", "6", "8", "12"], answer: 2 },
+			{ question: "¿Qué herramienta se usa para fijar un conector modular al extremo de un cable?", options: ["Una crimpadora", "Un multímetro óptico", "Un pelacables coaxial", "Un taladro de impacto"], answer: 0 },
+			{ question: "¿Qué orden de colores comienza T568B en el pin 1?", options: ["Blanco/verde", "Blanco/naranja", "Blanco/azul", "Blanco/marrón"], answer: 1 },
+			{ question: "¿Qué orden de colores comienza T568A en el pin 1?", options: ["Blanco/naranja", "Naranja", "Blanco/verde", "Verde"], answer: 2 },
+			{ question: "¿Qué cambia entre los esquemas T568A y T568B?", options: ["Se intercambian los pares verde y naranja", "Se intercambian los pares azul y marrón", "T568B añade un quinto par", "T568A solo sirve para fibra"], answer: 0 },
+			{ question: "Si ambos extremos de un cable están terminados con el mismo esquema, ¿cómo se denomina normalmente?", options: ["Cable directo", "Cable de consola", "Cable rollover", "Cable de fibra dúplex"], answer: 0 },
+			{ question: "¿Qué instrumento permite comprobar continuidad y orden de hilos en un cable Ethernet?", options: ["Un comprobador de cables", "Un punto de acceso", "Una fusionadora", "Un router"], answer: 0 },
+			{ question: "¿Para qué sirve una herramienta de impacto (punch-down)?", options: ["Insertar y terminar conductores en bloques de conexión", "Pulir conectores de fibra", "Medir la longitud de onda", "Crimpar conectores coaxiales"], answer: 0 },
+			{ question: "¿Qué medio transmite datos mediante pulsos de luz?", options: ["Cable UTP", "Cable paralelo", "Fibra óptica", "Cable telefónico analógico"], answer: 2 },
+			{ question: "¿Cuál es una ventaja habitual de la fibra óptica frente al cobre?", options: ["Es inmune a las interferencias electromagnéticas", "No necesita equipos en sus extremos", "Siempre es más fácil de reparar", "Transporta corriente para alimentar equipos"], answer: 0 },
+			{ question: "¿En qué se diferencian principalmente la fibra monomodo y la multimodo?", options: ["En el diámetro del núcleo y los modos de propagación", "En el color obligatorio de la cubierta", "En que una transmite luz y la otra electricidad", "En el tipo de protocolo IP que admiten"], answer: 0 },
+			{ question: "¿Qué característica suele asociarse al conector de fibra SC?", options: ["Cuerpo cuadrado y acoplamiento push-pull", "Punta metálica roscada para cable UTP", "Cuerpo muy pequeño con pestaña RJ", "Terminación por impacto en un panel"], answer: 0 },
+			{ question: "¿Qué característica suele asociarse al conector de fibra LC?", options: ["Formato compacto con pestaña de enganche", "Acoplamiento de bayoneta de gran tamaño", "Ocho contactos eléctricos", "Un cuerpo cuadrado idéntico al SC"], answer: 0 },
+			{ question: "¿Qué describe mejor PoE?", options: ["La alimentación de ciertos dispositivos a través del cable Ethernet", "Un protocolo de encaminamiento óptico", "Una norma para pulir conectores SC", "Un método para cifrar nombres DNS"], answer: 0 },
+			{ question: "¿Cuál es la función principal de DNS?", options: ["Resolver nombres de dominio a direcciones IP y otros registros", "Asignar automáticamente direcciones MAC", "Comprobar el orden de los pares UTP", "Cifrar todo el tráfico de una LAN"], answer: 0 },
+			{ question: "¿Qué servicio suele asignar automáticamente direcciones IP a los clientes?", options: ["DHCP", "FTP", "SMTP", "SNMP"], answer: 0 },
+			{ question: "¿Qué significa WAN?", options: ["Wireless Access Number", "Wide Area Network", "Wired Analog Node", "Web Address Name"], answer: 1 },
+			{ question: "¿Qué equipo permite que dispositivos inalámbricos se conecten a una red local?", options: ["Un punto de acceso", "Una crimpadora", "Un panel de parcheo", "Un conector LC"], answer: 0 },
+			{ question: "¿Qué estándar define, entre otros aspectos, los esquemas de cableado T568A y T568B?", options: ["TIA/EIA-568", "IEEE 802.11 exclusivamente", "RFC 1035", "USB 3.2"], answer: 0 },
+			{ question: "¿Qué significa MAC en una dirección de red?", options: ["Media Access Control", "Machine Assigned Channel", "Main Address Code", "Managed Analog Connection"], answer: 0 },
+			{ question: "¿Qué mide principalmente un OTDR en un enlace de fibra?", options: ["Eventos y pérdidas a lo largo de la fibra mediante reflectometría", "El orden de colores de un cable UTP", "La velocidad de un puerto Wi-Fi", "La dirección IP del transmisor"], answer: 0 },
+			{ question: "¿Qué precaución es importante al manipular fibra óptica?", options: ["No mirar directamente dentro de una fibra o puerto activo", "Doblarla en ángulos muy cerrados", "Tocar las caras pulidas para limpiarlas", "Usar una crimpadora sobre el núcleo"], answer: 0 }
+		];
+
+		const quizContent = document.querySelector("#quiz-content");
+		const progressFill = document.querySelector("#progress-fill");
+		const questionCount = document.querySelector("#question-count");
+		const quizStatus = document.querySelector("#quiz-status");
+		const intro = document.querySelector("#intro");
+		const quizLayout = document.querySelector("#quiz-layout");
+		document.querySelector("#start-button").addEventListener("click", () => {
+			intro.hidden = true;
+			quizLayout.hidden = false;
+			startQuiz();
+			const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+			quizLayout.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+		});
+		let selectedQuestions = [];
+		let currentIndex = 0;
+		let selectedAnswer = null;
+		let score = 0;
+
+		function chooseRandomQuestions() {
+			const shuffled = [...questionBank];
+			for (let index = shuffled.length - 1; index > 0; index -= 1) {
+				const randomIndex = Math.floor(Math.random() * (index + 1));
+				[shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+			}
+			return shuffled.slice(0, 10);
+		}
+
+		function renderQuestion() {
+			const item = selectedQuestions[currentIndex];
+			const letters = ["A", "B", "C", "D"];
+			selectedAnswer = null;
+			questionCount.textContent = `${String(currentIndex + 1).padStart(2, "0")} / 10`;
+			progressFill.style.width = `${((currentIndex + 1) / 10) * 100}%`;
+			quizStatus.textContent = "Cuestionario en curso";
+			quizContent.innerHTML = `
+				<div class="question-content">
+					<p class="question-kicker">Pregunta ${String(currentIndex + 1).padStart(2, "0")} · Elige una respuesta</p>
+					<h2 id="question-title">${item.question}</h2>
+					<div class="answer-list" role="group" aria-labelledby="question-title">
+						${item.options.map((option, index) => `<button class="answer-option" type="button" data-answer="${index}" aria-pressed="false"><span class="answer-letter">${letters[index]}</span><span class="answer-text">${option}</span></button>`).join("")}
+					</div>
+					<p class="feedback" id="feedback" aria-live="polite"></p>
+				</div>
+				<div class="question-footer">
+					<span class="keyboard-hint">Selecciona una opción para continuar</span>
+					<button class="primary-button" id="next-button" type="button" disabled>${currentIndex === 9 ? "Ver resultados" : "Siguiente pregunta"}<span aria-hidden="true">→</span></button>
+				</div>`;
+
+			quizContent.querySelectorAll(".answer-option").forEach((button) => {
+				button.addEventListener("click", () => selectAnswer(Number(button.dataset.answer)));
+			});
+			quizContent.querySelector("#next-button").addEventListener("click", advanceQuestion);
+		}
+
+		function selectAnswer(answerIndex) {
+			if (selectedAnswer !== null) return;
+			selectedAnswer = answerIndex;
+			const item = selectedQuestions[currentIndex];
+			const isCorrect = answerIndex === item.answer;
+			if (isCorrect) score += 1;
+
+			quizContent.querySelectorAll(".answer-option").forEach((button, index) => {
+				button.disabled = true;
+				button.setAttribute("aria-pressed", String(index === answerIndex));
+				if (index === item.answer) button.classList.add("is-correct");
+				if (index === answerIndex && !isCorrect) button.classList.add("is-wrong");
+			});
+
+			const feedback = quizContent.querySelector("#feedback");
+			feedback.textContent = isCorrect ? "¡Correcto! Buen trabajo." : `No exactamente. La respuesta correcta es: ${item.options[item.answer]}`;
+			feedback.classList.add(isCorrect ? "good" : "bad");
+			quizContent.querySelector("#next-button").disabled = false;
+		}
+
+		function advanceQuestion() {
+			if (selectedAnswer === null) return;
+			if (currentIndex < selectedQuestions.length - 1) {
+				currentIndex += 1;
+				renderQuestion();
+			} else {
+				renderResults();
+			}
+		}
+
+		function renderResults() {
+			quizStatus.textContent = "Cuestionario completado";
+			questionCount.textContent = "10 / 10";
+			progressFill.style.width = "100%";
+			const percentage = score * 10;
+			const summary = score >= 8 ? "Excelente dominio de los fundamentos de redes." : score >= 5 ? "Una buena base. Repasa las respuestas y vuelve a intentarlo." : "Cada intento suma. Revisa las soluciones y prueba otra combinación.";
+			quizContent.innerHTML = `
+				<div class="result-screen">
+					<div class="result-heading">
+						<div><p class="question-kicker">Fin del cuestionario</p><h2>Tu resultado</h2><p>${summary}</p></div>
+						<div class="score-badge"><strong>${score}/10</strong><span>${percentage}% aciertos</span></div>
+					</div>
+					<div class="result-summary">Has respondido correctamente <strong>${score} de 10 preguntas</strong>. Aquí tienes la revisión completa con las respuestas correctas.</div>
+					<div class="review-list">
+						${selectedQuestions.map((item, index) => {
+							const isCorrect = answers[index] === item.answer;
+							const yourAnswer = answers[index] === null ? "Sin respuesta" : item.options[answers[index]];
+							return `<article class="review-item"><h3>${String(index + 1).padStart(2, "0")}. ${item.question}</h3><p class="${isCorrect ? "correct-answer" : "wrong-answer"}">Tu respuesta: ${yourAnswer}</p><p class="correct-answer">Correcta: ${item.options[item.answer]}</p></article>`;
+						}).join("")}
+					</div>
+					<div class="result-actions"><p>El próximo intento seleccionará otras 10 preguntas al azar.</p><button class="retry-button" id="retry-button" type="button">Jugar de nuevo <span aria-hidden="true">↻</span></button></div>
+				</div>`;
+			quizContent.querySelector("#retry-button").addEventListener("click", startQuiz);
+		}
+
+		let answers = [];
+		function startQuiz() {
+			selectedQuestions = chooseRandomQuestions();
+			currentIndex = 0;
+			selectedAnswer = null;
+			score = 0;
+			answers = Array(10).fill(null);
+			renderQuestion();
+		}
+
+		const originalSelectAnswer = selectAnswer;
+		selectAnswer = function (answerIndex) {
+			answers[currentIndex] = answerIndex;
+			originalSelectAnswer(answerIndex);
+		};
+
+	</script>
+</body>
+</html>
